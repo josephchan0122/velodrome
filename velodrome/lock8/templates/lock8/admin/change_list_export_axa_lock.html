@@ -1,0 +1,7 @@
+{% extends "reversion/change_list.html" %}
+{% load i18n %}
+
+{% block object-tools-items %}
+  <li><a href="claim_axa_locks/" class="import_link">{% trans "Claim Axa Locks" %}</a></li>
+  {{ block.super }}
+{% endblock %}

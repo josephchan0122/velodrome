@@ -1,0 +1,1646 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://api.ws.m2mrag.telit.com/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="RMMService" targetNamespace="http://api.ws.m2mrag.telit.com/">
+  <wsdl:types>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://bo.ws.m2mrag.telit.com" xmlns:ns1="http://api.ws.m2mrag.telit.com/" targetNamespace="http://bo.ws.m2mrag.telit.com" version="1.0">
+
+  <xs:import namespace="http://api.ws.m2mrag.telit.com/"/>
+
+  <xs:complexType name="RequestBase">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="licenseKey" type="xs:string"/>
+      <xs:element name="msgId" type="xs:string"/>
+      <xs:element name="password" type="xs:string"/>
+      <xs:element name="username" type="xs:string"/>
+      <xs:element minOccurs="0" name="version" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="TerminalId">
+    <xs:sequence>
+      <xs:element name="accountId" type="xs:long"/>
+      <xs:element minOccurs="0" name="custom1" type="xs:string"/>
+      <xs:element minOccurs="0" name="custom2" type="xs:string"/>
+      <xs:element minOccurs="0" name="custom3" type="xs:string"/>
+      <xs:element minOccurs="0" name="customerId" type="xs:string"/>
+      <xs:element minOccurs="0" name="iccid" type="xs:string"/>
+      <xs:element minOccurs="0" name="imsi" type="xs:string"/>
+      <xs:element minOccurs="0" name="ipv4Address" type="xs:string"/>
+      <xs:element minOccurs="0" name="model" type="xs:string"/>
+      <xs:element minOccurs="0" name="modemId" type="xs:string"/>
+      <xs:element minOccurs="0" name="modemId2" type="xs:string"/>
+      <xs:element minOccurs="0" name="msisdn" type="xs:string"/>
+      <xs:element minOccurs="0" name="softwareVersion" type="xs:string"/>
+      <xs:element minOccurs="0" name="status" type="tns:SIMStatus"/>
+      <xs:element minOccurs="0" name="terminalId" type="xs:string"/>
+      <xs:element minOccurs="0" name="terminalType" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ResponseBase">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="errMessage" type="xs:string"/>
+      <xs:element name="reqMsgId" type="xs:string"/>
+      <xs:element name="result" type="ns1:responseType"/>
+      <xs:element name="serverFingerprint" type="xs:string"/>
+      <xs:element name="timestamp" type="xs:dateTime"/>
+      <xs:element name="version" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="EchoRequest">
+    <xs:complexContent>
+      <xs:extension base="tns:RequestBase">
+        <xs:sequence>
+          <xs:element name="echoValue" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="EchoResponse">
+    <xs:complexContent>
+      <xs:extension base="tns:ResponseBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="echoValue" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="TerminalRequestBase">
+    <xs:complexContent>
+      <xs:extension base="tns:RequestBase">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:simpleType name="SIMStatus">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Test_Ready"/>
+      <xs:enumeration value="Inventory"/>
+      <xs:enumeration value="Trial"/>
+      <xs:enumeration value="Activation_Ready"/>
+      <xs:enumeration value="Activated"/>
+      <xs:enumeration value="Deactivated"/>
+      <xs:enumeration value="Retired"/>
+      <xs:enumeration value="Purged"/>
+      <xs:enumeration value="Replaced"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+</xs:schema>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://bo.rmm.ws.m2mrag.telit.com" xmlns:ns2="http://api.ws.m2mrag.telit.com/" xmlns:ns1="http://bo.ws.m2mrag.telit.com" targetNamespace="http://bo.rmm.ws.m2mrag.telit.com" version="1.0">
+
+  <xs:import namespace="http://bo.ws.m2mrag.telit.com"/>
+
+  <xs:import namespace="http://api.ws.m2mrag.telit.com/"/>
+
+  <xs:complexType name="DoTerminalRebootRequest">
+    <xs:complexContent>
+      <xs:extension base="tns:RMMRequestBase">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="RMMRequestBase">
+    <xs:complexContent>
+      <xs:extension base="ns1:RequestBase">
+        <xs:sequence>
+          <xs:element name="id" type="ns1:TerminalId"/>
+          <xs:element minOccurs="0" name="smscAccountIdentifier" type="xs:string"/>
+          <xs:element minOccurs="0" name="useService" type="ns2:moduleManagementServiceType"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="DoTerminalRebootResponse">
+    <xs:complexContent>
+      <xs:extension base="tns:RMMResponseBase">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="RMMResponseBase">
+    <xs:complexContent>
+      <xs:extension base="ns1:ResponseBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="id" type="ns1:TerminalId"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="EnableRemoteATOverTCPDirectRequest">
+    <xs:complexContent>
+      <xs:extension base="tns:RMMRequestBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="commandExecTimeout" type="xs:byte"/>
+          <xs:element name="host" type="xs:string"/>
+          <xs:element name="hostPort" type="xs:int"/>
+          <xs:element minOccurs="0" name="manageSessionClose" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="retryCount" type="xs:byte"/>
+          <xs:element minOccurs="0" name="retryDelay" type="xs:short"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="EnableRemoteATOverTCPDirectResponse">
+    <xs:complexContent>
+      <xs:extension base="tns:RMMResponseBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="sessionId" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="DoTerminalHardwareTestRequest">
+    <xs:complexContent>
+      <xs:extension base="tns:RMMRequestBase">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="DoTerminalHardwareTestResponse">
+    <xs:complexContent>
+      <xs:extension base="tns:RMMResponseBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="hwTestResult" type="tns:TerminalHardwareTest"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="TerminalHardwareTest">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="chargerConnected" type="ns2:chargerStatus"/>
+      <xs:element minOccurs="0" name="cpuMode" type="ns2:cpuMode"/>
+      <xs:element name="cpuTemp" type="xs:float"/>
+      <xs:element name="voltage" type="xs:float"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="EnableRemoteATOverTCPProxyRequest">
+    <xs:complexContent>
+      <xs:extension base="tns:RMMRequestBase">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="EnableRemoteATOverTCPProxyResponse">
+    <xs:complexContent>
+      <xs:extension base="tns:RMMResponseBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="sessionId" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="DoTerminalICMPTestRequest">
+    <xs:complexContent>
+      <xs:extension base="tns:RMMRequestBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="url" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="DoTerminalICMPTestResponse">
+    <xs:complexContent>
+      <xs:extension base="tns:RMMResponseBase">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="echoResult" nillable="true" type="tns:IcmpEchoResult"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="IcmpEchoResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="destinationAddress" type="xs:string"/>
+      <xs:element name="retryNum" type="xs:short"/>
+      <xs:element name="timeout" type="xs:int"/>
+      <xs:element name="ttl" type="xs:short"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="DisableRemoteATOverTCPRequest">
+    <xs:complexContent>
+      <xs:extension base="tns:RMMRequestBase">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="DisableRemoteATOverTCPResponse">
+    <xs:complexContent>
+      <xs:extension base="tns:RMMResponseBase">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="ResolveNetworkToLocationRequest">
+    <xs:complexContent>
+      <xs:extension base="tns:RMMRequestBase">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="gsm" nillable="true" type="tns:NetworkMeasurementsGERAN"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="umts" nillable="true" type="tns:NetworkMeasurementsUTRAN"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="wifi" nillable="true" type="tns:NetworkMeasurementsWiFi"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="NetworkMeasurementsGERAN">
+    <xs:complexContent>
+      <xs:extension base="tns:NetworkMeasurementsBase">
+        <xs:sequence>
+          <xs:element name="bsic" type="xs:short"/>
+          <xs:element minOccurs="0" name="pdParams" type="xs:string"/>
+          <xs:element minOccurs="0" name="rssi" type="xs:short"/>
+          <xs:element minOccurs="0" name="serviceDomain" type="ns2:servicePlaneSupport"/>
+          <xs:element minOccurs="0" name="ta" type="xs:short"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="NetworkMeasurementsBase">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="availablity" type="ns2:networkAvailblityStatus"/>
+      <xs:element name="cid" type="xs:int"/>
+      <xs:element name="lac" type="xs:int"/>
+      <xs:element minOccurs="0" name="locationSourceName" type="xs:string"/>
+      <xs:element name="mcc" type="xs:short"/>
+      <xs:element name="mnc" type="xs:short"/>
+      <xs:element name="nid" type="xs:int"/>
+      <xs:element minOccurs="0" name="rat" type="ns2:radioAccessTech"/>
+      <xs:element minOccurs="0" name="registration" type="ns2:registrationStatus"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="NetworkMeasurementsUTRAN">
+    <xs:complexContent>
+      <xs:extension base="tns:NetworkMeasurementsBase">
+        <xs:sequence>
+          <xs:element name="drx" type="xs:int"/>
+          <xs:element name="ecio" type="xs:float"/>
+          <xs:element name="nom" type="xs:short"/>
+          <xs:element name="psc" type="xs:int"/>
+          <xs:element minOccurs="0" name="rac" type="xs:short"/>
+          <xs:element name="rscp" type="xs:short"/>
+          <xs:element minOccurs="0" name="rssi" type="xs:short"/>
+          <xs:element name="scr" type="xs:short"/>
+          <xs:element minOccurs="0" name="serviceDomain" type="ns2:servicePlaneSupport"/>
+          <xs:element name="uarfcn" type="xs:int"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="NetworkMeasurementsWiFi">
+    <xs:complexContent>
+      <xs:extension base="tns:NetworkMeasurementsBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="linkspeed" type="xs:int"/>
+          <xs:element minOccurs="0" name="mac" type="xs:string"/>
+          <xs:element minOccurs="0" name="rssi" type="xs:short"/>
+          <xs:element minOccurs="0" name="type" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="ResolveNetworkToLocationResponse">
+    <xs:complexContent>
+      <xs:extension base="tns:RMMResponseBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="locationInfo" type="tns:LocationInformation"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="LocationInformation">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="accuracyGrade" type="ns2:accuracyGrade"/>
+      <xs:element minOccurs="0" name="altitude" type="xs:double"/>
+      <xs:element minOccurs="0" name="cid" type="xs:int"/>
+      <xs:element minOccurs="0" name="heading" type="xs:double"/>
+      <xs:element minOccurs="0" name="lac" type="xs:int"/>
+      <xs:element minOccurs="0" name="latitude" type="xs:double"/>
+      <xs:element minOccurs="0" name="locationSourceName" type="xs:string"/>
+      <xs:element minOccurs="0" name="longitude" type="xs:double"/>
+      <xs:element minOccurs="0" name="mcc" type="xs:short"/>
+      <xs:element minOccurs="0" name="mnc" type="xs:short"/>
+      <xs:element minOccurs="0" name="radioAccessTech" type="ns2:radioAccessTech"/>
+      <xs:element minOccurs="0" name="uncertainty" type="xs:int"/>
+      <xs:element minOccurs="0" name="velocity" type="xs:double"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="GetTerminalLastKnownLocationRequest">
+    <xs:complexContent>
+      <xs:extension base="ns1:TerminalRequestBase">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="terminalId" nillable="true" type="ns1:TerminalId"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="GetTerminalLastKnownLocationResponse">
+    <xs:complexContent>
+      <xs:extension base="ns1:ResponseBase">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="terminalLocationInformation" nillable="true" type="ns2:terminalLocationInformation"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="GetTerminalKnownLocationsRequest">
+    <xs:complexContent>
+      <xs:extension base="ns1:TerminalRequestBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="endTime" type="xs:dateTime"/>
+          <xs:element name="pageSize" type="xs:int"/>
+          <xs:element minOccurs="0" name="sortDirection" type="ns2:sortDirection"/>
+          <xs:element minOccurs="0" name="startKey" type="xs:string"/>
+          <xs:element minOccurs="0" name="startTime" type="xs:dateTime"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="terminalId" nillable="true" type="ns1:TerminalId"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="GetTerminalKnownLocationsResponse">
+    <xs:complexContent>
+      <xs:extension base="ns1:ResponseBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="nextStartKey" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="terminalLocationInformation" nillable="true" type="ns2:terminalLocationInformation"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="GetTerminalRegistrationStatusRequest">
+    <xs:complexContent>
+      <xs:extension base="tns:RMMRequestBase">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="GetTerminalRegistrationStatusResponse">
+    <xs:complexContent>
+      <xs:extension base="tns:RMMResponseBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="registrationinfo" type="tns:NetworkMeasurementsBase"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="GetTerminalLastNetworkRegistrationRequest">
+    <xs:complexContent>
+      <xs:extension base="ns1:TerminalRequestBase">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="terminalId" nillable="true" type="ns1:TerminalId"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="GetTerminalLastNetworkRegistrationResponse">
+    <xs:complexContent>
+      <xs:extension base="ns1:ResponseBase">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="registrationInfo" nillable="true" type="tns:NetworkRegistrationInfo"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="NetworkRegistrationInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="errMessage" type="xs:string"/>
+      <xs:element minOccurs="0" name="gtAddr" type="xs:string"/>
+      <xs:element minOccurs="0" name="id" type="ns1:TerminalId"/>
+      <xs:element minOccurs="0" name="mcc" type="xs:short"/>
+      <xs:element minOccurs="0" name="mnc" type="xs:short"/>
+      <xs:element minOccurs="0" name="msc" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="networkName" type="xs:string"/>
+      <xs:element minOccurs="0" name="registartionTime" type="xs:dateTime"/>
+      <xs:element minOccurs="0" name="result" type="ns2:responseType"/>
+      <xs:element minOccurs="0" name="sgsn" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="vlr" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="GetTerminalLocationRequest">
+    <xs:complexContent>
+      <xs:extension base="tns:RMMRequestBase">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="GetTerminalLocationResponse">
+    <xs:complexContent>
+      <xs:extension base="tns:RMMResponseBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="locationInfo" type="tns:LocationInformation"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="GetTerminalVisibleNetworksRequest">
+    <xs:complexContent>
+      <xs:extension base="tns:RMMRequestBase">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="GetTerminalVisibleNetworksResponse">
+    <xs:complexContent>
+      <xs:extension base="tns:RMMResponseBase">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="registrationinfo" nillable="true" type="tns:NetworkMeasurementsBase"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="GetSessionStateRequest">
+    <xs:complexContent>
+      <xs:extension base="tns:RMMRequestBase">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="GetSessionStateResponse">
+    <xs:complexContent>
+      <xs:extension base="tns:RMMResponseBase">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="session" nillable="true" type="tns:Session"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Session">
+    <xs:sequence>
+      <xs:element name="active" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="connectionStatus" type="ns2:connectionStatus"/>
+      <xs:element minOccurs="0" name="sessionId" type="xs:int"/>
+      <xs:element minOccurs="0" name="timeToExpirationSec" type="xs:long"/>
+      <xs:element minOccurs="0" name="type" type="ns2:sessionType"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="RunRemoteATCommandRequest">
+    <xs:complexContent>
+      <xs:extension base="tns:RMMRequestBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="command" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="RunRemoteATCommandResponse">
+    <xs:complexContent>
+      <xs:extension base="tns:RMMResponseBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="response" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="GetTerminalPropertiesRequest">
+    <xs:complexContent>
+      <xs:extension base="tns:RMMRequestBase">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="GetTerminalPropertiesResponse">
+    <xs:complexContent>
+      <xs:extension base="tns:RMMResponseBase">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="GetTerminalCoverageSnapshotRequest">
+    <xs:complexContent>
+      <xs:extension base="tns:RMMRequestBase">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="GetTerminalCoverageSnapshotResponse">
+    <xs:complexContent>
+      <xs:extension base="tns:RMMResponseBase">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="gsm" nillable="true" type="tns:NetworkMeasurementsGERAN"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="umts" nillable="true" type="tns:NetworkMeasurementsUTRAN"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="wifi" nillable="true" type="tns:NetworkMeasurementsWiFi"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="EditTerminalCommunicationPlanRequest">
+    <xs:complexContent>
+      <xs:extension base="ns1:TerminalRequestBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="nac" type="tns:NetworkAccessConfiguration"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="NetworkAccessConfiguration">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="effectiveDate" type="xs:dateTime"/>
+      <xs:element minOccurs="0" name="id" type="ns1:TerminalId"/>
+      <xs:element minOccurs="0" name="nacName" type="xs:string"/>
+      <xs:element minOccurs="0" name="result" type="ns2:responseType"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="EditTerminalCommunicationPlanResponse">
+    <xs:complexContent>
+      <xs:extension base="ns1:ResponseBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="nac" type="tns:NetworkAccessConfiguration"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="GetTerminalCommunicationPlanRequest">
+    <xs:complexContent>
+      <xs:extension base="ns1:TerminalRequestBase">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="id" nillable="true" type="ns1:TerminalId"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="GetTerminalCommunicationPlanResponse">
+    <xs:complexContent>
+      <xs:extension base="ns1:ResponseBase">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="nac" nillable="true" type="tns:NetworkAccessConfiguration"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="GetTerminalPDPContextInfoRequest">
+    <xs:complexContent>
+      <xs:extension base="tns:RMMRequestBase">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="pdpid" nillable="true" type="xs:short"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="GetTerminalPDPContextInfoResponse">
+    <xs:complexContent>
+      <xs:extension base="tns:RMMResponseBase">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="pdpcontext" nillable="true" type="tns:PDPContextInfo"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="PDPContextInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ipConnection" type="tns:IpConnection"/>
+      <xs:element name="pdpid" type="xs:short"/>
+      <xs:element minOccurs="0" name="result" type="ns2:responseType"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="IpConnection">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="apn" type="xs:string"/>
+      <xs:element minOccurs="0" name="connectionStatus" type="ns2:connectionStatus"/>
+      <xs:element minOccurs="0" name="destinationAddress" type="xs:string"/>
+      <xs:element minOccurs="0" name="destinationPort" type="xs:short"/>
+      <xs:element name="ipVersion" type="xs:short"/>
+      <xs:element minOccurs="0" name="linkspeed" type="xs:int"/>
+      <xs:element minOccurs="0" name="sourceAddress" type="xs:string"/>
+      <xs:element minOccurs="0" name="sourcePort" type="xs:short"/>
+      <xs:element minOccurs="0" name="transportProtocol" type="ns2:transportProtocol"/>
+      <xs:element minOccurs="0" name="uptime" type="xs:long"/>
+    </xs:sequence>
+  </xs:complexType>
+
+</xs:schema>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://api.ws.m2mrag.telit.com/" xmlns:ns2="http://bo.ws.m2mrag.telit.com" xmlns:ns1="http://bo.rmm.ws.m2mrag.telit.com" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://api.ws.m2mrag.telit.com/">
+  <xs:import namespace="http://bo.rmm.ws.m2mrag.telit.com"/>
+  <xs:import namespace="http://bo.ws.m2mrag.telit.com"/>
+  <xs:element name="disableRemoteATOverTCP" type="tns:disableRemoteATOverTCP"/>
+  <xs:element name="disableRemoteATOverTCPResponse" type="tns:disableRemoteATOverTCPResponse"/>
+  <xs:element name="doTerminalHardwareTest" type="tns:doTerminalHardwareTest"/>
+  <xs:element name="doTerminalHardwareTestResponse" type="tns:doTerminalHardwareTestResponse"/>
+  <xs:element name="doTerminalICMPTest" type="tns:doTerminalICMPTest"/>
+  <xs:element name="doTerminalICMPTestResponse" type="tns:doTerminalICMPTestResponse"/>
+  <xs:element name="doTerminalReboot" type="tns:doTerminalReboot"/>
+  <xs:element name="doTerminalRebootResponse" type="tns:doTerminalRebootResponse"/>
+  <xs:element name="echo" type="tns:echo"/>
+  <xs:element name="echoResponse" type="tns:echoResponse"/>
+  <xs:element name="editTerminalCommunicationPlan" type="tns:editTerminalCommunicationPlan"/>
+  <xs:element name="editTerminalCommunicationPlanResponse" type="tns:editTerminalCommunicationPlanResponse"/>
+  <xs:element name="enableRemoteATOverTCPDirect" type="tns:enableRemoteATOverTCPDirect"/>
+  <xs:element name="enableRemoteATOverTCPDirectResponse" type="tns:enableRemoteATOverTCPDirectResponse"/>
+  <xs:element name="enableRemoteATOverTCPProxy" type="tns:enableRemoteATOverTCPProxy"/>
+  <xs:element name="enableRemoteATOverTCPProxyResponse" type="tns:enableRemoteATOverTCPProxyResponse"/>
+  <xs:element name="getSessionState" type="tns:getSessionState"/>
+  <xs:element name="getSessionStateResponse" type="tns:getSessionStateResponse"/>
+  <xs:element name="getTerminalCommunicationPlan" type="tns:getTerminalCommunicationPlan"/>
+  <xs:element name="getTerminalCommunicationPlanResponse" type="tns:getTerminalCommunicationPlanResponse"/>
+  <xs:element name="getTerminalCoverageSnapshot" type="tns:getTerminalCoverageSnapshot"/>
+  <xs:element name="getTerminalCoverageSnapshotResponse" type="tns:getTerminalCoverageSnapshotResponse"/>
+  <xs:element name="getTerminalKnownLocations" type="tns:getTerminalKnownLocations"/>
+  <xs:element name="getTerminalKnownLocationsResponse" type="tns:getTerminalKnownLocationsResponse"/>
+  <xs:element name="getTerminalLastKnownLocation" type="tns:getTerminalLastKnownLocation"/>
+  <xs:element name="getTerminalLastKnownLocationResponse" type="tns:getTerminalLastKnownLocationResponse"/>
+  <xs:element name="getTerminalLastNetworkRegistration" type="tns:getTerminalLastNetworkRegistration"/>
+  <xs:element name="getTerminalLastNetworkRegistrationResponse" type="tns:getTerminalLastNetworkRegistrationResponse"/>
+  <xs:element name="getTerminalLocation" type="tns:getTerminalLocation"/>
+  <xs:element name="getTerminalLocationResponse" type="tns:getTerminalLocationResponse"/>
+  <xs:element name="getTerminalPDPContextInfo" type="tns:getTerminalPDPContextInfo"/>
+  <xs:element name="getTerminalPDPContextInfoResponse" type="tns:getTerminalPDPContextInfoResponse"/>
+  <xs:element name="getTerminalProperties" type="tns:getTerminalProperties"/>
+  <xs:element name="getTerminalPropertiesResponse" type="tns:getTerminalPropertiesResponse"/>
+  <xs:element name="getTerminalRegistrationStatus" type="tns:getTerminalRegistrationStatus"/>
+  <xs:element name="getTerminalRegistrationStatusResponse" type="tns:getTerminalRegistrationStatusResponse"/>
+  <xs:element name="getTerminalVisibleNetworks" type="tns:getTerminalVisibleNetworks"/>
+  <xs:element name="getTerminalVisibleNetworksResponse" type="tns:getTerminalVisibleNetworksResponse"/>
+  <xs:element name="resolveNetworkToLocation" type="tns:resolveNetworkToLocation"/>
+  <xs:element name="resolveNetworkToLocationResponse" type="tns:resolveNetworkToLocationResponse"/>
+  <xs:element name="runRemoteATCommand" type="tns:runRemoteATCommand"/>
+  <xs:element name="runRemoteATCommandResponse" type="tns:runRemoteATCommandResponse"/>
+  <xs:complexType name="doTerminalReboot">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="ns1:DoTerminalRebootRequest"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="doTerminalRebootResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="ns1:DoTerminalRebootResponse"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="echo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="ns2:EchoRequest"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="echoResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="ns2:EchoResponse"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="enableRemoteATOverTCPDirect">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="ns1:EnableRemoteATOverTCPDirectRequest"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="enableRemoteATOverTCPDirectResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="ns1:EnableRemoteATOverTCPDirectResponse"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="doTerminalHardwareTest">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="ns1:DoTerminalHardwareTestRequest"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="doTerminalHardwareTestResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="ns1:DoTerminalHardwareTestResponse"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="enableRemoteATOverTCPProxy">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="ns1:EnableRemoteATOverTCPProxyRequest"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="enableRemoteATOverTCPProxyResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="ns1:EnableRemoteATOverTCPProxyResponse"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="doTerminalICMPTest">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="ns1:DoTerminalICMPTestRequest"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="doTerminalICMPTestResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="ns1:DoTerminalICMPTestResponse"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="disableRemoteATOverTCP">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="ns1:DisableRemoteATOverTCPRequest"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="disableRemoteATOverTCPResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="ns1:DisableRemoteATOverTCPResponse"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="resolveNetworkToLocation">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="ns1:ResolveNetworkToLocationRequest"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="resolveNetworkToLocationResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="ns1:ResolveNetworkToLocationResponse"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getTerminalLastKnownLocation">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="ns1:GetTerminalLastKnownLocationRequest"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getTerminalLastKnownLocationResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="ns1:GetTerminalLastKnownLocationResponse"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="terminalLocationInformation">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="errMessage" type="xs:string"/>
+      <xs:element minOccurs="0" name="locationInfo" type="ns1:LocationInformation"/>
+      <xs:element minOccurs="0" name="result" type="tns:responseType"/>
+      <xs:element minOccurs="0" name="terminaId" type="ns2:TerminalId"/>
+      <xs:element minOccurs="0" name="time" type="xs:dateTime"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getTerminalKnownLocations">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="ns1:GetTerminalKnownLocationsRequest"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getTerminalKnownLocationsResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="ns1:GetTerminalKnownLocationsResponse"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getTerminalRegistrationStatus">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="ns1:GetTerminalRegistrationStatusRequest"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getTerminalRegistrationStatusResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="ns1:GetTerminalRegistrationStatusResponse"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getTerminalLastNetworkRegistration">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="ns1:GetTerminalLastNetworkRegistrationRequest"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getTerminalLastNetworkRegistrationResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="ns1:GetTerminalLastNetworkRegistrationResponse"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getTerminalLocation">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="ns1:GetTerminalLocationRequest"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getTerminalLocationResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="ns1:GetTerminalLocationResponse"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getTerminalVisibleNetworks">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="ns1:GetTerminalVisibleNetworksRequest"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getTerminalVisibleNetworksResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="ns1:GetTerminalVisibleNetworksResponse"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getSessionState">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="ns1:GetSessionStateRequest"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getSessionStateResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="ns1:GetSessionStateResponse"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="runRemoteATCommand">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="ns1:RunRemoteATCommandRequest"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="runRemoteATCommandResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="ns1:RunRemoteATCommandResponse"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getTerminalProperties">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="ns1:GetTerminalPropertiesRequest"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getTerminalPropertiesResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="ns1:GetTerminalPropertiesResponse"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getTerminalCoverageSnapshot">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="ns1:GetTerminalCoverageSnapshotRequest"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getTerminalCoverageSnapshotResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="ns1:GetTerminalCoverageSnapshotResponse"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="editTerminalCommunicationPlan">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="ns1:EditTerminalCommunicationPlanRequest"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="editTerminalCommunicationPlanResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="ns1:EditTerminalCommunicationPlanResponse"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getTerminalCommunicationPlan">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="ns1:GetTerminalCommunicationPlanRequest"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getTerminalCommunicationPlanResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="ns1:GetTerminalCommunicationPlanResponse"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getTerminalPDPContextInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="ns1:GetTerminalPDPContextInfoRequest"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getTerminalPDPContextInfoResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="ns1:GetTerminalPDPContextInfoResponse"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="moduleManagementServiceType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="SMS"/>
+      <xs:enumeration value="TCP"/>
+      <xs:enumeration value="DEFAULT"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="responseType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Success"/>
+      <xs:enumeration value="Error"/>
+      <xs:enumeration value="Rejected"/>
+      <xs:enumeration value="Unauthorized"/>
+      <xs:enumeration value="Partial_Success"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="chargerStatus">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="DISCONNECTED"/>
+      <xs:enumeration value="CONNECTED_AND_CHARGING"/>
+      <xs:enumeration value="CONNECTED_AND_CHARG_COMPLETED"/>
+      <xs:enumeration value="UNKNOWN"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="cpuMode">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="NORMAL"/>
+      <xs:enumeration value="CPU_OVER_CLOCK_STEP1"/>
+      <xs:enumeration value="CPU_OVER_CLOCK_STEP1_DURING_GPRS_RXTX"/>
+      <xs:enumeration value="CPU_OVER_CLOCK_STEP2"/>
+      <xs:enumeration value="CPU_OVER_CLOCK_STEP2_DURING_GPRS_RXTX"/>
+      <xs:enumeration value="UNKNOWN"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="servicePlaneSupport">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="CS_ONLY"/>
+      <xs:enumeration value="PS_ONLY"/>
+      <xs:enumeration value="CS_AND_PS"/>
+      <xs:enumeration value="UNKNOWN"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="networkAvailblityStatus">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="UNKNOWN"/>
+      <xs:enumeration value="AVAILABLE"/>
+      <xs:enumeration value="CURRENT"/>
+      <xs:enumeration value="FORBIDDEN"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="radioAccessTech">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="GERAN"/>
+      <xs:enumeration value="UTRAN"/>
+      <xs:enumeration value="CDMA_IS95"/>
+      <xs:enumeration value="CDMA_1xRTT"/>
+      <xs:enumeration value="CDMA_EVDO"/>
+      <xs:enumeration value="LTE"/>
+      <xs:enumeration value="WiFi"/>
+      <xs:enumeration value="WiMax"/>
+      <xs:enumeration value="GPS"/>
+      <xs:enumeration value="Other"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="registrationStatus">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="NOT_REGISTERED"/>
+      <xs:enumeration value="REGISTERED_HPLMN"/>
+      <xs:enumeration value="SEARCHING"/>
+      <xs:enumeration value="REGISTRATION_DENIED"/>
+      <xs:enumeration value="UNKNOWN"/>
+      <xs:enumeration value="REGISTERED_ROAMING"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="accuracyGrade">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Fine"/>
+      <xs:enumeration value="Coarse"/>
+      <xs:enumeration value="NetworkOnly"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="sortDirection">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="ASCENDING"/>
+      <xs:enumeration value="DESCENDING"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="connectionStatus">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="DISCONNECTED"/>
+      <xs:enumeration value="CONNECTED"/>
+      <xs:enumeration value="UNKNOWN"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="sessionType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="RMM_SMS"/>
+      <xs:enumeration value="RMM_TCP_DIRECT"/>
+      <xs:enumeration value="RMM_TCP_PROXY"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="transportProtocol">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="TCP"/>
+      <xs:enumeration value="UDP"/>
+      <xs:enumeration value="NONE"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="Exception" type="tns:Exception"/>
+  <xs:complexType name="Exception">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="message" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="getTerminalPDPContextInfo">
+    <wsdl:part element="tns:getTerminalPDPContextInfo" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getTerminalLocationResponse">
+    <wsdl:part element="tns:getTerminalLocationResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="doTerminalICMPTestResponse">
+    <wsdl:part element="tns:doTerminalICMPTestResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getTerminalRegistrationStatus">
+    <wsdl:part element="tns:getTerminalRegistrationStatus" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getTerminalLastNetworkRegistrationResponse">
+    <wsdl:part element="tns:getTerminalLastNetworkRegistrationResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="doTerminalHardwareTest">
+    <wsdl:part element="tns:doTerminalHardwareTest" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getTerminalVisibleNetworksResponse">
+    <wsdl:part element="tns:getTerminalVisibleNetworksResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="resolveNetworkToLocationResponse">
+    <wsdl:part element="tns:resolveNetworkToLocationResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getTerminalPropertiesResponse">
+    <wsdl:part element="tns:getTerminalPropertiesResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getTerminalCommunicationPlan">
+    <wsdl:part element="tns:getTerminalCommunicationPlan" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="enableRemoteATOverTCPProxy">
+    <wsdl:part element="tns:enableRemoteATOverTCPProxy" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getSessionStateResponse">
+    <wsdl:part element="tns:getSessionStateResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="enableRemoteATOverTCPDirect">
+    <wsdl:part element="tns:enableRemoteATOverTCPDirect" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="echo">
+    <wsdl:part element="tns:echo" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="disableRemoteATOverTCP">
+    <wsdl:part element="tns:disableRemoteATOverTCP" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getTerminalPDPContextInfoResponse">
+    <wsdl:part element="tns:getTerminalPDPContextInfoResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getTerminalCommunicationPlanResponse">
+    <wsdl:part element="tns:getTerminalCommunicationPlanResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getTerminalCoverageSnapshot">
+    <wsdl:part element="tns:getTerminalCoverageSnapshot" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="doTerminalICMPTest">
+    <wsdl:part element="tns:doTerminalICMPTest" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="doTerminalHardwareTestResponse">
+    <wsdl:part element="tns:doTerminalHardwareTestResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="enableRemoteATOverTCPDirectResponse">
+    <wsdl:part element="tns:enableRemoteATOverTCPDirectResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getTerminalRegistrationStatusResponse">
+    <wsdl:part element="tns:getTerminalRegistrationStatusResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="Exception">
+    <wsdl:part element="tns:Exception" name="Exception">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="doTerminalReboot">
+    <wsdl:part element="tns:doTerminalReboot" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getTerminalKnownLocations">
+    <wsdl:part element="tns:getTerminalKnownLocations" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getSessionState">
+    <wsdl:part element="tns:getSessionState" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="echoResponse">
+    <wsdl:part element="tns:echoResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getTerminalProperties">
+    <wsdl:part element="tns:getTerminalProperties" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getTerminalLastKnownLocation">
+    <wsdl:part element="tns:getTerminalLastKnownLocation" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getTerminalCoverageSnapshotResponse">
+    <wsdl:part element="tns:getTerminalCoverageSnapshotResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="runRemoteATCommand">
+    <wsdl:part element="tns:runRemoteATCommand" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getTerminalVisibleNetworks">
+    <wsdl:part element="tns:getTerminalVisibleNetworks" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="disableRemoteATOverTCPResponse">
+    <wsdl:part element="tns:disableRemoteATOverTCPResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="enableRemoteATOverTCPProxyResponse">
+    <wsdl:part element="tns:enableRemoteATOverTCPProxyResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getTerminalLastNetworkRegistration">
+    <wsdl:part element="tns:getTerminalLastNetworkRegistration" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getTerminalLastKnownLocationResponse">
+    <wsdl:part element="tns:getTerminalLastKnownLocationResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="editTerminalCommunicationPlanResponse">
+    <wsdl:part element="tns:editTerminalCommunicationPlanResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="editTerminalCommunicationPlan">
+    <wsdl:part element="tns:editTerminalCommunicationPlan" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="resolveNetworkToLocation">
+    <wsdl:part element="tns:resolveNetworkToLocation" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="doTerminalRebootResponse">
+    <wsdl:part element="tns:doTerminalRebootResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getTerminalLocation">
+    <wsdl:part element="tns:getTerminalLocation" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="runRemoteATCommandResponse">
+    <wsdl:part element="tns:runRemoteATCommandResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getTerminalKnownLocationsResponse">
+    <wsdl:part element="tns:getTerminalKnownLocationsResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="RMM">
+    <wsdl:operation name="doTerminalReboot">
+      <wsdl:input message="tns:doTerminalReboot" name="doTerminalReboot">
+    </wsdl:input>
+      <wsdl:output message="tns:doTerminalRebootResponse" name="doTerminalRebootResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:Exception" name="Exception">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="echo">
+      <wsdl:input message="tns:echo" name="echo">
+    </wsdl:input>
+      <wsdl:output message="tns:echoResponse" name="echoResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:Exception" name="Exception">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="enableRemoteATOverTCPDirect">
+      <wsdl:input message="tns:enableRemoteATOverTCPDirect" name="enableRemoteATOverTCPDirect">
+    </wsdl:input>
+      <wsdl:output message="tns:enableRemoteATOverTCPDirectResponse" name="enableRemoteATOverTCPDirectResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:Exception" name="Exception">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="doTerminalHardwareTest">
+      <wsdl:input message="tns:doTerminalHardwareTest" name="doTerminalHardwareTest">
+    </wsdl:input>
+      <wsdl:output message="tns:doTerminalHardwareTestResponse" name="doTerminalHardwareTestResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:Exception" name="Exception">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="enableRemoteATOverTCPProxy">
+      <wsdl:input message="tns:enableRemoteATOverTCPProxy" name="enableRemoteATOverTCPProxy">
+    </wsdl:input>
+      <wsdl:output message="tns:enableRemoteATOverTCPProxyResponse" name="enableRemoteATOverTCPProxyResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:Exception" name="Exception">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="doTerminalICMPTest">
+      <wsdl:input message="tns:doTerminalICMPTest" name="doTerminalICMPTest">
+    </wsdl:input>
+      <wsdl:output message="tns:doTerminalICMPTestResponse" name="doTerminalICMPTestResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:Exception" name="Exception">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="disableRemoteATOverTCP">
+      <wsdl:input message="tns:disableRemoteATOverTCP" name="disableRemoteATOverTCP">
+    </wsdl:input>
+      <wsdl:output message="tns:disableRemoteATOverTCPResponse" name="disableRemoteATOverTCPResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:Exception" name="Exception">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="resolveNetworkToLocation">
+      <wsdl:input message="tns:resolveNetworkToLocation" name="resolveNetworkToLocation">
+    </wsdl:input>
+      <wsdl:output message="tns:resolveNetworkToLocationResponse" name="resolveNetworkToLocationResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:Exception" name="Exception">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getTerminalLastKnownLocation">
+      <wsdl:input message="tns:getTerminalLastKnownLocation" name="getTerminalLastKnownLocation">
+    </wsdl:input>
+      <wsdl:output message="tns:getTerminalLastKnownLocationResponse" name="getTerminalLastKnownLocationResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:Exception" name="Exception">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getTerminalKnownLocations">
+      <wsdl:input message="tns:getTerminalKnownLocations" name="getTerminalKnownLocations">
+    </wsdl:input>
+      <wsdl:output message="tns:getTerminalKnownLocationsResponse" name="getTerminalKnownLocationsResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:Exception" name="Exception">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getTerminalRegistrationStatus">
+      <wsdl:input message="tns:getTerminalRegistrationStatus" name="getTerminalRegistrationStatus">
+    </wsdl:input>
+      <wsdl:output message="tns:getTerminalRegistrationStatusResponse" name="getTerminalRegistrationStatusResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:Exception" name="Exception">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getTerminalLastNetworkRegistration">
+      <wsdl:input message="tns:getTerminalLastNetworkRegistration" name="getTerminalLastNetworkRegistration">
+    </wsdl:input>
+      <wsdl:output message="tns:getTerminalLastNetworkRegistrationResponse" name="getTerminalLastNetworkRegistrationResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:Exception" name="Exception">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getTerminalLocation">
+      <wsdl:input message="tns:getTerminalLocation" name="getTerminalLocation">
+    </wsdl:input>
+      <wsdl:output message="tns:getTerminalLocationResponse" name="getTerminalLocationResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:Exception" name="Exception">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getTerminalVisibleNetworks">
+      <wsdl:input message="tns:getTerminalVisibleNetworks" name="getTerminalVisibleNetworks">
+    </wsdl:input>
+      <wsdl:output message="tns:getTerminalVisibleNetworksResponse" name="getTerminalVisibleNetworksResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:Exception" name="Exception">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getSessionState">
+      <wsdl:input message="tns:getSessionState" name="getSessionState">
+    </wsdl:input>
+      <wsdl:output message="tns:getSessionStateResponse" name="getSessionStateResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:Exception" name="Exception">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="runRemoteATCommand">
+      <wsdl:input message="tns:runRemoteATCommand" name="runRemoteATCommand">
+    </wsdl:input>
+      <wsdl:output message="tns:runRemoteATCommandResponse" name="runRemoteATCommandResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:Exception" name="Exception">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getTerminalProperties">
+      <wsdl:input message="tns:getTerminalProperties" name="getTerminalProperties">
+    </wsdl:input>
+      <wsdl:output message="tns:getTerminalPropertiesResponse" name="getTerminalPropertiesResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:Exception" name="Exception">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getTerminalCoverageSnapshot">
+      <wsdl:input message="tns:getTerminalCoverageSnapshot" name="getTerminalCoverageSnapshot">
+    </wsdl:input>
+      <wsdl:output message="tns:getTerminalCoverageSnapshotResponse" name="getTerminalCoverageSnapshotResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:Exception" name="Exception">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="editTerminalCommunicationPlan">
+      <wsdl:input message="tns:editTerminalCommunicationPlan" name="editTerminalCommunicationPlan">
+    </wsdl:input>
+      <wsdl:output message="tns:editTerminalCommunicationPlanResponse" name="editTerminalCommunicationPlanResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:Exception" name="Exception">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getTerminalCommunicationPlan">
+      <wsdl:input message="tns:getTerminalCommunicationPlan" name="getTerminalCommunicationPlan">
+    </wsdl:input>
+      <wsdl:output message="tns:getTerminalCommunicationPlanResponse" name="getTerminalCommunicationPlanResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:Exception" name="Exception">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getTerminalPDPContextInfo">
+      <wsdl:input message="tns:getTerminalPDPContextInfo" name="getTerminalPDPContextInfo">
+    </wsdl:input>
+      <wsdl:output message="tns:getTerminalPDPContextInfoResponse" name="getTerminalPDPContextInfoResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:Exception" name="Exception">
+    </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="RMMServiceSoapBinding" type="tns:RMM">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="doTerminalReboot">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="doTerminalReboot">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="doTerminalRebootResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="Exception">
+        <soap:fault name="Exception" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="echo">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="echo">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="echoResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="Exception">
+        <soap:fault name="Exception" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="doTerminalHardwareTest">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="doTerminalHardwareTest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="doTerminalHardwareTestResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="Exception">
+        <soap:fault name="Exception" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="enableRemoteATOverTCPDirect">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="enableRemoteATOverTCPDirect">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="enableRemoteATOverTCPDirectResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="Exception">
+        <soap:fault name="Exception" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="doTerminalICMPTest">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="doTerminalICMPTest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="doTerminalICMPTestResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="Exception">
+        <soap:fault name="Exception" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="enableRemoteATOverTCPProxy">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="enableRemoteATOverTCPProxy">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="enableRemoteATOverTCPProxyResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="Exception">
+        <soap:fault name="Exception" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="disableRemoteATOverTCP">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="disableRemoteATOverTCP">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="disableRemoteATOverTCPResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="Exception">
+        <soap:fault name="Exception" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getTerminalLastKnownLocation">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getTerminalLastKnownLocation">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getTerminalLastKnownLocationResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="Exception">
+        <soap:fault name="Exception" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="resolveNetworkToLocation">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="resolveNetworkToLocation">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="resolveNetworkToLocationResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="Exception">
+        <soap:fault name="Exception" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getTerminalKnownLocations">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getTerminalKnownLocations">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getTerminalKnownLocationsResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="Exception">
+        <soap:fault name="Exception" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getTerminalRegistrationStatus">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getTerminalRegistrationStatus">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getTerminalRegistrationStatusResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="Exception">
+        <soap:fault name="Exception" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getTerminalLastNetworkRegistration">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getTerminalLastNetworkRegistration">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getTerminalLastNetworkRegistrationResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="Exception">
+        <soap:fault name="Exception" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getTerminalLocation">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getTerminalLocation">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getTerminalLocationResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="Exception">
+        <soap:fault name="Exception" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getSessionState">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getSessionState">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getSessionStateResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="Exception">
+        <soap:fault name="Exception" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getTerminalVisibleNetworks">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getTerminalVisibleNetworks">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getTerminalVisibleNetworksResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="Exception">
+        <soap:fault name="Exception" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getTerminalProperties">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getTerminalProperties">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getTerminalPropertiesResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="Exception">
+        <soap:fault name="Exception" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="runRemoteATCommand">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="runRemoteATCommand">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="runRemoteATCommandResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="Exception">
+        <soap:fault name="Exception" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="editTerminalCommunicationPlan">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="editTerminalCommunicationPlan">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="editTerminalCommunicationPlanResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="Exception">
+        <soap:fault name="Exception" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getTerminalCoverageSnapshot">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getTerminalCoverageSnapshot">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getTerminalCoverageSnapshotResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="Exception">
+        <soap:fault name="Exception" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getTerminalCommunicationPlan">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getTerminalCommunicationPlan">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getTerminalCommunicationPlanResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="Exception">
+        <soap:fault name="Exception" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getTerminalPDPContextInfo">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getTerminalPDPContextInfo">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getTerminalPDPContextInfoResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="Exception">
+        <soap:fault name="Exception" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="RMMService">
+    <wsdl:port binding="tns:RMMServiceSoapBinding" name="RMMPort">
+      <soap:address location="https://api.m2mair.com:8443/remoteat/rmm"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

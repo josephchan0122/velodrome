@@ -1,0 +1,15 @@
+{% extends "email/base.html" %}
+{% block content %}
+
+{% if description %}<h3>{{ description }}</h3>
+{% endif %}
+{% if info_list %}
+<ul>
+  {% for k, v in info_list.items %}
+  <li><strong>{{ k }}</strong>: {{ v }}</li>
+  {% endfor %}
+</ul>
+{% endif %}
+
+<p><a href="{{ alert.frontend_uri }}">See this alert in FMS</a>.</p>
+{% endblock %}

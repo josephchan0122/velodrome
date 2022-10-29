@@ -1,0 +1,22 @@
+{% extends "email/base.html" %}
+{% block content %}
+
+{% if info_list %}
+<p>
+{% if info_list.category == 'location_needs_bicycles' %}
+    <a href="{{ user_link }}">{{ info_list.username }}</a> has requested bicycles to be supplied at the following location: <a href="https://www.google.com/maps/?q={{ info_list.lat }},{{ info_list.lon }}">map</a>
+{% endif %}
+{% if info_list.category == 'bicycle_missing' %}
+    <a href="{{ user_link }}">{{ info_list.username }}</a> couldn't find any bicycles at the following location: <a href="https://www.google.com/maps/?q={{ info_list.lat }},{{ info_list.lon }}">map</a>
+    {% if info_list.bicycle %}
+        <a href="{{ info_list.bicycle.frontend_uri }}">bicycle {{ info_list.bicycle.name }}</a>
+    {% endif %}
+{% endif %}
+{% if info_list.category == 'bicycle_damaged' %}
+    <a href="{{ user_link }}">{{ info_list.username }}</a> reported damage to <a href="{{ info_list.bicycle.frontend_uri }}">bicycle {{ info_list.bicycle.name }}</a>.{% if info_list.last_rental_timestamp %} This bicycle was last rented on {{ info_list.last_rental_timestamp }}.{% endif %}
+{% endif %}
+</p>
+{% if info_list.message %}<p>Message: {{ info_list.message }}</p>{% endif %}
+{% endif %}
+
+{% endblock %}

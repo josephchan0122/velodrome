@@ -1,0 +1,25 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgis/postgis:14-3.2
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    ports:
+      - "5444:5432"
+  web:
+    build: .
+    command: bash -c "envdir envdir python manage.py migrate && envdir envdir python manage.py runserver"
+    volumes:
+      - .:/src
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+
+
+volumes:
+  db-data:

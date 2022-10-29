@@ -1,0 +1,8 @@
+{% if exception %}
+Ended up in error:
+{{ exception }}
+{% else %}
+Total Lock and Bicycle treated: {{ total }}
+Total Lock skipped: {{ skipped }}
+Total errors: {{ error }}
+{% endif %}

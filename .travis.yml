@@ -1,0 +1,109 @@
+language: python
+dist: xenial
+cache: pip
+services:
+  - postgresql
+addons:
+  postgresql: "9.6"
+  apt:
+    packages:
+    # https://github.com/travis-ci/travis-ci/issues/6972#issuecomment-265486882
+    - postgresql-9.6-postgis-2.4
+    # For pycurl wheel (gnutls/gnutls.h).
+    - libgnutls-dev
+    - libxml2-dev
+    - libxmlsec1-dev
+    - libxmlsec1-openssl
+python: "3.8"
+matrix:
+  fast_finish: true
+  include:
+    - services:
+        - docker
+env:
+  global:
+    # Work around ImportError through Python 2 boto plugin.
+    # (https://travis-ci.com/lock8/velodrome/jobs/31486065).
+    - BOTO_CONFIG=/dev/null
+    - secure: "gD7Q7vzvdLb7ed0d36EZYw68/MuGwDwGcbn9akxvFKz8zsXctkikbO/IdSlZZl9DpCNKfMES0sMBiishMMRMTIj6BixSi6SoXrQkFxCU+iFZsdoYf99c/YJwEvING/iLPiF7egfySeZ28VkpDzr/xImo+Nqo02Qf9dUZ1ogfcvenUaL5L9D6RulvAUbjh40Nuy1HOALtZy2M8WeawpP9X8JZjSdlw+mHIPCC/sXKbNYAmSUicI8z21sGY+6xwV9HDEeJcOZHphtlXGziRY1sWRJ2R35Ean7chZ05IJ9z4IgJdpuSva2o3NN5vY8xzd4NXYCBKXKr35XZSPndCRIuv+ciPfqoglH4J5xaEv5MAddgZE/svvDDL/Y2p7PB1YkYQXxxVAOpemQpf7OmBKFShaBNT4EoVOpK5pXffJoSmbCItPZRYO1nLEz3bkmDj1bJ/5NR3KIlsRCbCdFQmP5zx4D8Nk+uaEcNfVlOmOYHFQhtEm9aWUAxmEAe03ebw1jXlwk18FBzfw1pst0RE/KN7GP8f2b1P7tt8mjLoK2rEU1i9XTkKvlc8rjwH+SyvzqzrGRLI/rwf4nfRZnuTTP1SlX0ALxQA9GveRHxKRWo/YAPdCC9cMuTFYzoYDcG0FFLvPz9maV28XihVaufbNXg9G+glgsabOeQiNPBblSzOHQ="
+    - PYTEST_ADDOPTS="-vv --dc=Travis --tb=auto --showlocals --parametrize-image --fail-on-template-vars --maxfail=10"
+    - PYTHONHASHSEED=$TRAVIS_BUILD_ID
+notifications:
+  email: false
+
+install:
+  - |
+    # Setup TEST_DOCKERIMAGE/TEST_MIGRATIONS/TEST_MIGRATED.
+    set -e
+
+    # For "make test_travis".
+    TEST_DOCKERIMAGE=0
+    if ! git diff --quiet --exit-code "$TRAVIS_COMMIT_RANGE" \
+        .dockerignore Dockerfile requirements velodrome/lock8/integration-tests/test-docker.py; then \
+      echo 'Changes to Docker files: running check with TEST_DOCKERIMAGE=1.'
+      TEST_DOCKERIMAGE=1
+    fi
+
+    # For "make check".
+    # Skip the migration tests if there are no changes to migrations.
+    TEST_MIGRATIONS=1
+    TEST_MIGRATED=1
+    if git diff --quiet --exit-code "$TRAVIS_COMMIT_RANGE" \
+        velodrome/lock8/migrations velodrome/lock8/tests/test_migrations.py; then
+      TEST_MIGRATIONS=0
+      echo "Skipping migration tests."
+    fi
+    if git diff --quiet --exit-code "$TRAVIS_COMMIT_RANGE" \
+        velodrome/lock8/migrations velodrome/lock8/models.py; then
+      echo "No changes to models.py/migrations. Skipping migrated-check."
+      TEST_MIGRATED=0
+    fi
+    set +e
+
+  # Install requirements.
+  - travis_retry pip install -U pip
+  - travis_retry pip install -U -r requirements/travis.txt
+  # For "make check".
+  - pip install -r requirements/qa.txt
+  - pip install -e . vendored/pinax-stripe
+
+  - |
+    # Postgresql setup.
+    set -ex
+    ps aux | grep postgres
+    which postgres
+    postgres --version
+    which postgres
+    psql --version
+
+    postgresql_server_version=$(python -c 'import psycopg2; print(psycopg2.connect("user=postgres").server_version)')
+    if [[ "$postgresql_server_version" != 906* ]]; then
+      echo "Error: unexpected PostgreSQL server version: $postgresql_server_version. Aborting."
+      return 1
+    fi
+    psql -U postgres -c "CREATE EXTENSION IF NOT EXISTS pg_trgm" template1
+    psql -U postgres -c "CREATE EXTENSION IF NOT EXISTS postgis" template1
+    psql -U postgres -c "CREATE EXTENSION IF NOT EXISTS unaccent" template1
+    psql -U postgres -c 'CREATE DATABASE velodrome'
+    psql -U postgres -c 'CREATE DATABASE trackings'
+    set +ex
+
+  - mkdir -p build/static_root
+before_script:
+  - |
+    set -e
+    for i in envdir.travis/*; do
+      eval "export ${i#*/}='$(<$i)'"
+    done
+    if [[ -f .coverage ]]; then echo 'Unexpected file: .coverage' >&2; return 1; fi
+    set +e
+script:
+  - make --keep-going test_travis check_travis \
+      TEST_MIGRATED=$TEST_MIGRATED TEST_MIGRATIONS=$TEST_MIGRATIONS \
+      PYTEST_ARGS="-n auto --cov --cov-report= velodrome/lock8/tests velodrome/lock8/integration-tests" \
+      TEST_DOCKERIMAGE=$TEST_DOCKERIMAGE
+after_success:
+  - travis_retry pip install codecov
+  - coverage report -m
+  - coverage xml
+  - travis_retry codecov -X search gcov pycov -f coverage.xml --token=333490dc-03e9-4354-bea5-b34b91a9c92d

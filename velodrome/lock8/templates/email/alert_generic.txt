@@ -1,0 +1,5 @@
+{% if description %}{{ description }}
+{% endif %}{% if info_list %}{% for k, v in info_list.items %} - {{ k }}: {{ v }}
+{% endfor %}{% endif %}
+See this alert in FMS:
+{{ alert.frontend_uri }}

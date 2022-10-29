@@ -1,0 +1,89 @@
+# Until https://github.com/jazzband/django-debug-toolbar/pull/1103 is released.
+django-debug-toolbar==1.9.1
+# https://github.com/yourlabs/django-autocomplete-light/issues/1050
+django-querysetsequence==0.8
+# Waiting for https://github.com/gizmag/django-fsm-log/pull/84.
+django-fsm-log<1.6.0
+# For fakeredis<1.
+redis<3
+
+# https://github.com/lock8/pinax-stripe/tree/next
+-e ./vendored/pinax-stripe
+
+djangorestframework<3.10
+django[argon2]<2.3
+django-filter==2.3.0
+
+Pillow
+aiozmq
+base58
+boto==2.49.0
+boto3==1.14.29
+botocore==1.17.29
+celery[sqs]<4.5
+# Last cryptography version does not use Rust
+cryptography==3.3.2
+# Use msgpack manually, celery's msgpack extra would install msgpack-python.
+# (https://github.com/celery/celery/pull/5279)
+msgpack
+coreapi
+datedelta
+dj-database-url<1
+django-autocomplete-light[gfk]==3.3.2
+django-cache-url
+django-concurrency
+django-configurations
+django-cors-headers<3.12
+django-debug-toolbar
+django-extra-fields
+django-fsm
+django-fsm-admin
+django-fsm-log
+django-localflavor
+django-log-request-id
+django-mptt
+django_querysetsequence
+django-redis==4.11.0
+django-reversion
+django-ses
+django-speedinfo==1.4.1
+django-storages<1.10
+django_extensions==3.0.3
+djangorestframework-csv
+djangorestframework-gis
+djangorestframework-jwt
+djangorestframework-jwt-refresh-token
+djoser==1.7.0
+social-auth-core==3.3.3
+defusedxml==0.6.0
+python3-saml==1.10.1
+drf-nested-routers
+
+drf-yasg==1.17.1
+swagger-spec-validator
+
+dumb-init
+geopy
+jsonschema
+humanize
+kombu<4.7
+# for drf's documentation
+markdown<3.4
+msgpack
+openpyxl
+premailer
+psycopg2-binary==2.8.6
+# for drf's documentation
+pygments
+pyzmq
+raven
+rest-framework-generic-relations==2.0.0
+rules
+social-auth-app-django==3.4.0
+
+# They removed refund() method in stripe lib in version 4
+stripe<4
+
+uwsgi
+
+whitenoise

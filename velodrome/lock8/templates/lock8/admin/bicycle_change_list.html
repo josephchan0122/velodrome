@@ -1,0 +1,9 @@
+{% extends "reversion/change_list.html" %}
+{% load i18n %}
+
+{% block object-tools-items %}
+  <li><a href="fb_bulk_import/" class="import_link">{% trans "Facebook Import" %}</a></li>
+  <li><a href="generic_bulk_import/" class="import_link">{% trans "Generic Import" %}</a></li>
+  <li><a href="assign_devices_to_bicycles/" class="import_link">{% trans "Assign Device to Bicycles" %}</a></li>
+  {{ block.super }}
+{% endblock %}

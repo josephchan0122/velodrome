@@ -1,0 +1,16 @@
+Here's the lock organization moving report to {{ destination }}:
+
+{% if error %}
+I encountered a fatal error: {{ error }}
+{% else %}
+Number of locks updated was {{ report.updated }}.
+{% if report.skipped %}
+Number of locks skipped was {{ report.skipped }}.
+{% endif %}
+{% if failed %}
+Number of failures {{ report.failure }}.
+{% for failure in failed %}
+  - {{ failure }}
+{% endfor %}
+{% endif %}
+{% endif %}

@@ -1,0 +1,33 @@
+[run]
+include = velodrome/*
+branch = True
+omit =
+    velodrome/lock8/migrations/*
+    velodrome/lock8/management/commands/*
+    velodrome/lock8/tests/test_migrations.py
+    velodrome/__init__.py
+    velodrome/lock8/__init__.py
+    velodrome/lock8/tests/*
+    velodrome/lock8/conftest.py
+
+[report]
+precision = 2
+exclude_lines =
+    raise NotImplementedError
+    pragma: no cover
+# Branch coverage: ignore default and assert statements.
+partial_branches =
+    \s+#\s*(pragma|PRAGMA)[:\s]?\s*(no|NO)\s*(branch|BRANCH)
+    ^\s*assert\s
+omit =
+    velodrome/lock8/migrations/*
+    velodrome/lock8/management/commands/*
+    velodrome/lock8/tests/test_migrations.py
+    velodrome/__init__.py
+    velodrome/lock8/__init__.py
+    velodrome/lock8/tests/*
+    velodrome/lock8/conftest.py
+
+[paths]
+source = ./
+  /srv/velodrome/src/

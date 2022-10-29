@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Noa</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="https://fonts.googleapis.com/css?family=Source+Serif+Pro:400,600" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600" rel="stylesheet">
+
+  <style type="text/css">
+    body {
+      min-width: 500px;
+      font-family: "Source Sans Pro", Helvetic, sans-serif;
+      color: #8b8b8b;
+      text-align: center;
+      background-color: #f6f6f6;
+      margin: 0px auto 40px auto;
+    }
+
+    a {
+      color: #3D7BB4;
+      text-decoration: none;
+      padding-bottom: 4px;
+    }
+
+    .container {
+      margin: 40px auto 20px auto;
+      width: 80%;
+      border: solid 1px #ddd;
+      border-radius: 5px;
+      background-color: #fff;
+    }
+
+    #container-cover-image {
+      height: 150px;
+      width: 100%;
+      background-color: #efefef;
+      background-image: url("https://s3-eu-west-1.amazonaws.com/noa-email-templates/img/cover.jpg");
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center center;
+    }
+
+    #container-content {
+      padding: 30px;
+    }
+
+    .steps {
+      width: 80%;
+      background-color: #fcfcfc;
+      border: solid 1px #efefef;
+      border-radius: 3px;
+      padding: 5% 10% 5% 10%;
+      margin: auto;
+    }
+
+    ol {
+      text-align: left;
+    }
+
+    .steps lh {
+      font-weight: bold;
+    }
+
+    h1 {
+      font-family: "Source Serif Pro", Georgia, serif;
+    }
+
+    .footer {
+      text-align: center;
+    }
+
+    .button {
+      border-radius: 5px;
+      color: #fff;
+      display: block;
+      padding: 15px 40px 15px 40px;
+      margin: 40px 25% 10px 25%;
+      background-color: #3D7BB4;
+    }
+
+    .button:hover {
+      background-color: #2E6292;
+    }
+
+    .footer p {
+      font-size: 14px;
+      color: #999;
+    }
+
+    .footer-logo {
+      margin: 40px auto 0px auto;
+      width: 100px;
+      height: 40px;
+      background-image: url("https://s3-eu-west-1.amazonaws.com/noa-email-templates/img/logo.png");
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center center;
+    }
+
+    p.fine-print {
+      color: #bbb;
+    }
+
+    a.fine-print {
+      color: #bbb;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div id="container-cover-image"></div>
+    <div id="container-content">
+
+    {% block content %}
+    {{ content }}
+    {% endblock %}
+
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="footer-logo"></div>
+    <p>For feedback or support, please contact <a href="mailto:support@noa.one">Noa Technologies</a>.</p>
+    <p class="fine-print">&copy; Noa Technologies {% now "Y" %}</p>
+  </div>
+</body>
+</html>

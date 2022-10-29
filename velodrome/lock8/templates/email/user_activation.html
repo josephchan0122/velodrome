@@ -1,0 +1,17 @@
+{% extends "email/base_user.html" %}
+{% block content %}
+
+{% if user.first_name %}<h2>{{ user.first_name }}</h2>{% endif %}
+
+<h1>Welcome to your new Rider app, from {{ organization_name }}.</h1>
+
+<p>
+  You're almost ready to unlock your smart bicycle fleet.<br />
+  Click the button below to verify and activate your account.
+</p>
+
+<a class="button" href="{{ activation_url }}">
+  Verify
+</a>
+
+{% endblock %}

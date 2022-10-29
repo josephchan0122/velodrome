@@ -1,0 +1,20 @@
+# Dockerfile used to run tests.
+FROM velodrome-test-base
+
+ARG DEBIAN_FRONTEND=noninteractive
+
+RUN mkdir -p build/static_root
+
+# Re-add g++ (or libc as analog for ubuntu) for fakeredis.
+# https://github.com/jamesls/fakeredis/blob/4bfc7a279/fakeredis.py#L101
+RUN apt-get update \
+    && apt-get install -yq build-essential gcc git
+
+# Reinstall pip.
+RUN curl https://bootstrap.pypa.io/get-pip.py | python \
+    && python -m pip install -U pip==20.3.3
+
+COPY requirements/travis.txt /srv/velodrome/requirements/
+RUN cd /srv/velodrome && python -m pip install -r /srv/velodrome/requirements/travis.txt
+
+COPY Makefile Makefile

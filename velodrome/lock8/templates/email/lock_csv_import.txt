@@ -1,0 +1,13 @@
+Hi,
+here the report of csv import:
+
+Locks created {{ report.created }}
+Locks skipped {{ report.skipped }}
+Locks deleted {{ report.deleted }}
+Locks failed {{ report.failed }}
+
+{% for counter, failure in failures.items %}
+    {{ counter }}: {{ failure | safe }}
+{% endfor %}
+
+Have a good day.

@@ -1,0 +1,12 @@
+{% extends "admin/500.html" %}
+{% load i18n %}
+
+{% block content %}
+
+<h1>{% trans 'Server Error <em>(500)</em>' %}</h1>
+
+{% if request.sentry and request.sentry.id %}
+<p>There's been an error. If you need assistance, you may reference this error as <strong>{{ request.id|default:"0" }}/{{ request.sentry.id }}</strong>.</p>
+{% endif %}
+
+{% endblock %}

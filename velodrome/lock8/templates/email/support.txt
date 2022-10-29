@@ -1,0 +1,4 @@
+{% if info_list %}{% for k, v in info_list.items %} - {{ k }}: {{ v }}
+{% endfor %}{% endif %}
+See this user in FMS:
+{{ user_link }}

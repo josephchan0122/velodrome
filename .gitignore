@@ -1,0 +1,16 @@
+*.pyc
+*.egg-info/
+build/
+envdir*/
+!envdir.travis/
+.testmondata
+.tmontmp/
+.coverage
+htmlcov/
+.venv/
+.ipynb_checkpoints/
+.idea/
+.vscode
+django.log
+.envfile
+.DS_Store

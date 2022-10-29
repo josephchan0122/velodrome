@@ -1,0 +1,11 @@
+{% extends "email/base_user.html" %}
+{% block content %}
+
+  <h1>Welcome{% if username %}, {{ username }}{% endif %}.</h1>
+  <p>You have been invited to join the {{ organization_name }} smart bicycle fleet.</p>
+
+  <a class="button" href="{{ invitation_url }}">
+    Confirm Invitation
+  </a>
+
+{% endblock %}

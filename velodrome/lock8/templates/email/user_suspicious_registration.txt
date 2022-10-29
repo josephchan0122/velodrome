@@ -1,0 +1,12 @@
+Hi,
+
+We noticed someone just tried to sign up for a {{ organization_name }} account using your registered email address.
+
+If you have not tried to sign up yourself:
+You can login with this email address in the {{ organization_name }} app. In case you cannot remember your password you are able to reset it within the app.
+
+If you have not tried to sign up yourself:
+No action is required from your side, because we ignored this request for signing up.
+
+Kind Regards,
+The Noa Support Team

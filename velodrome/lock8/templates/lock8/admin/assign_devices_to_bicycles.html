@@ -1,0 +1,56 @@
+{% extends "admin/base.html" %}
+{% load i18n static %}
+{% block extrahead %}
+{{ media }}
+{{ block.super }}
+{% endblock %}
+
+
+{% block title %}{% trans "Assign Devices to Bicycles with spreadsheet" %}{% endblock %}
+
+{% block breadcrumbs_last %}
+{% trans "Import" %}
+{% endblock %}
+
+{% block content %}
+{% if result %}
+
+    <h2>Import {{ result }} started.</h2>
+    <p>You will receive an email shortly with the result of the import.</p>
+{% else %}
+<h1>{% trans "Assign Devices to Bicycles" %}</h1>
+<form action="" method="post" id="{{ opts.model_name }}_form" enctype="multipart/form-data">
+{% csrf_token %}
+
+<p>
+    {% for f in fields  %}
+    {% if forloop.counter0 %}
+    ,
+    {% endif %}
+    <code>{{ f }}</code>
+    {% endfor %}
+</p>
+
+<fieldset class="module aligned">
+    {% for field in form %}
+    <div class="form-row">
+        {{ field.errors }}
+
+        {{ field.label_tag }}
+
+        {{ field }}
+
+        {% if field.field.help_text %}
+        <p class="help">{{ field.field.help_text|safe }}</p>
+        {% endif %}
+    </div>
+    {% endfor %}
+</fieldset>
+
+<div class="submit-row">
+    <input type="submit" class="default" value="{% trans "Submit" %}">
+</div>
+</form>
+
+{% endif %}
+{% endblock %}

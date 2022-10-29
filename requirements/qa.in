@@ -1,0 +1,8 @@
+# Requirements for "make check_travis".
+# Unpin after upgrading boto3
+urllib3==1.25.11
+
+flake8
+flake8-isort==3.0.1
+mccabe
+safety

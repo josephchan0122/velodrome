@@ -1,0 +1,5 @@
+Welcome{% if username %}, {{ username }}{% endif %}.
+
+You have been invited to join the {{ organization_name }} smart bicycle fleet.
+
+Confirm the invitation by clicking on the following link: {{ invitation_url }} .

@@ -1,0 +1,7 @@
+[submodule "velodrome/lock8/maas-tsp-reference"]
+	path = velodrome/lock8/maas-tsp-reference
+	url = https://github.com/maasglobal/maas-tsp-reference.git
+[submodule "pinax-stripe"]
+	path = vendored/pinax-stripe
+	url = https://github.com/lock8/pinax-stripe.git
+	branch = next

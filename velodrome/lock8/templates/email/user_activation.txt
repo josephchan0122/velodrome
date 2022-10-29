@@ -1,0 +1,8 @@
+{% if user.first_name %}{{ user.first_name }},
+
+welcome{% else %}Welcome{% endif %} to your new Rider app, from {{ organization_name }}.
+
+You're almost ready to unlock your smart bicycle fleet.
+Please use the link below to verify and activate your account.
+
+{{ activation_url }}

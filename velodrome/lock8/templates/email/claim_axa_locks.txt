@@ -1,0 +1,14 @@
+Here is the report for AxaLock creation from your spreadsheet.
+
+{% if errror %}
+I encountered a fatal error: {{ error }}
+{% else %}
+Number of Axa Locks created: {{ report.created }}
+Number of Axa Locks paired with a bicycle: {{ report.paired }}
+{% if report.failed %}
+Number of failures: {{ report.failed }}
+Failures: {% for failure in failures %}
+  - {{ failure }}
+{% endfor %}
+{% endif %}
+{% endif %}

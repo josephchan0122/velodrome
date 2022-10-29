@@ -1,0 +1,11 @@
+Hi,
+here the report of Bicycle import:
+
+Bicycles created {{ report.created }}
+Bicycles skipped {{ report.skipped }}
+
+{% for counter, failure in failures.items %}
+    {{ counter }}: {{ failure | safe }}
+{% endfor %}
+
+Have a good day.

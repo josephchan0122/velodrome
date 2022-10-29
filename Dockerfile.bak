@@ -1,0 +1,75 @@
+FROM python:3.8-slim-buster
+LABEL maintainer="backend@noa.one"
+
+ARG DEBIAN_FRONTEND=noninteractive
+ARG DEBCONF_NONINTERACTIVE_SEEN=true
+ENV HOME /root
+
+RUN apt-get update && \
+    apt-get -yq upgrade && \
+    apt-get install -yq --no-install-recommends \
+    libpq-dev gdal-bin libgdal-dev \
+    gcc libcurl4-gnutls-dev libgnutls28-dev  \
+    libxml2-dev libxmlsec1-dev libxmlsec1-openssl \
+    locales pkg-config \
+    && apt-get autoclean \
+    && apt-get autoremove \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
+    locale-gen
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US:en
+ENV LC_ALL en_US.UTF-8
+
+RUN mkdir -p \
+    /srv/velodrome/src \
+    /srv/velodrome/static \
+    /srv/velodrome/tmp \
+    /srv/velodrome/envdir \
+    /srv/velodrome/src/etc \
+    /srv/velodrome/run \
+    /tmp/images
+
+# Keep envdir for dev environment
+VOLUME /srv/velodrome/envdir
+VOLUME /srv/velodrome/static
+VOLUME /srv/velodrome/run
+
+WORKDIR /srv/velodrome
+# locksocket-rpc-consumer
+EXPOSE 9898
+# uwsgi stat socket
+EXPOSE 9191
+
+ENV PATH=/srv/velodrome/venv/bin:$PATH
+# https://github.com/docker/docker/issues/14203
+# can be dropped once we switched to k8s
+ENV DOCKER_FIX=" "
+
+RUN mkdir requirements
+COPY requirements/base.txt requirements/travis.txt requirements/dev.txt requirements/
+COPY vendored vendored
+
+RUN python -m pip install --no-cache-dir --no-dependencies --ignore-installed -r requirements/dev.txt
+
+WORKDIR /srv/velodrome/src
+ADD manage.py setup.cfg setup.py /srv/velodrome/src/
+ADD etc/ /srv/velodrome/src/etc/
+COPY .git .git
+COPY bin bin
+COPY velodrome velodrome
+
+# Set velodrome.VERSION via .git/HEAD.
+RUN git_head="$(cat .git/HEAD)"; git_ref="${git_head#ref: }"; \
+  if [ "$git_ref" != "$git_head" ]; then \
+    [ -f ".git/$git_ref" ] && git_ref="$(cat .git/$git_ref)" || git_ref="${git_ref##*/}"; \
+  fi; \
+  sed -i "s/^VERSION =.*/$(printf "VERSION = '%s'" "$git_ref")/" velodrome/__init__.py
+
+RUN python -m pip install --no-cache-dir -e . ../vendored/pinax-stripe
+
+# Basic checks.
+RUN python -c 'import argon2, pinax, psycopg2, pycurl, zmq; from PIL import Image; from lxml import etree; from django.contrib.gis import gdal'
+
+CMD ["/bin/bash"]

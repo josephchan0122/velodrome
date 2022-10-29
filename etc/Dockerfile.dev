@@ -1,0 +1,5 @@
+# Dockerfile used to run development tasks, e.g. runserver.
+FROM velodrome-test-runner
+
+COPY requirements/dev.txt /srv/velodrome/requirements/
+RUN cd /srv/velodrome && pip install -r requirements/dev.txt

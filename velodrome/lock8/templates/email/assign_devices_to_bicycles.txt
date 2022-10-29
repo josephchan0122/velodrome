@@ -1,0 +1,16 @@
+Here's the report of Bulk devices assignment:
+
+{% if error %}
+I encountered a fatal error: {{ error }}
+{% else %}
+Number of bicycles and devices updated was {{ report.updated }}.
+{% if report.skipped %}
+Number of bicycles skipped was {{ report.skipped }}.
+{% endif %}
+{% if failed %}
+Number of failures {{ failed | length }}.
+{% for failure in failed %}
+  - {{ failure }}
+{% endfor %}
+{% endif %}
+{% endif %}

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>{{ organization_name }}</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <style>
+  a {
+    color: inherit;
+    text-decoration: underline;
+  }
+  .wrapper {
+    font-family: sans-serif;
+    text-align:center;
+    padding: 50px 0;
+    background:#224a69 url(https://s3-eu-west-1.amazonaws.com/noa-email-templates/img/bg-pattern-rider.png);
+  }
+  .logo {
+    display: inline-block;
+    margin: 0 0 50px;
+    width: 72px
+  }
+  .content {
+    background: white;
+    text-align: center;
+    padding: 30px 10px;
+    margin: 0 auto 50px;
+  }
+  .content > h1,
+  .content > h2 {
+    font-weight: normal;
+    font-size: 22px;
+  }
+  .content > .button {
+    font-size: 22px;
+  }
+  .footer {
+    color: white;
+  }
+  </style>
+</head>
+<body>
+<div class="wrapper">
+  {% if logo %}
+  <img class="logo" src="{{ logo.url }}">
+  {% endif %}
+  <div class="content">
+    {% block content %}
+    {{ content }}
+    {% endblock %}
+  </div>
+  <div class="footer">
+    <p>For feedback or support, please contact <a href="mailto:{{ support_email }}">{{ organization_name }} Support</a>.</p>
+    <p class="fine-print">&copy; {{ organization_name }} {% now "Y" %}</p>
+  </div>
+</div>
+</body>
+</html>

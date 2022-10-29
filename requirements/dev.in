@@ -1,0 +1,12 @@
+# Depends on travis.in
+
+Werkzeug
+envdir
+fancycompleter
+
+# Because flake8==4.0.1 significantly downgrades importlib-metadata (4.8.1 to 4.2.0)
+flake8==3.9.2
+
+isort==4.3.21
+pdbpp
+pip-tools

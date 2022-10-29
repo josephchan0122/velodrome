@@ -1,0 +1,27 @@
+#*
+#
+## Keep HEAD reference for salt's velodrome-opbeat-release-tracking (see #88).
+#!.git/HEAD
+## Keep refs/heads files to resolve ref: in HEAD (Dockerfile).
+#!.git/refs/heads/
+#
+#!Makefile
+#!bin
+#!etc
+#!manage.py
+#!requirements
+#!setup.cfg
+#!setup.py
+#!envdir/*
+#!envdir.travis/*
+#!velodrome
+#!vendored/pinax-stripe/pinax
+#!vendored/pinax-stripe/setup.py
+
+
+**/*.pyc
+venv
+velodrome.egg-info
+notebooks
+.dependabot
+.pytest_cache

@@ -1,0 +1,20 @@
+{% extends "email/base.html" %}
+{% block content %}
+
+<h1>Welcome to {{ organization_name }}</h1>
+<p>The {{ organization_name }} app is your key to {{ organization_name }} Connected bikes around your campus and city.</p>
+
+      <ol class="steps">
+        <lh>Getting Started</lh>
+        <li>Download the app</li>
+        <li>Log in with social media or your company account</li>
+        <li>Find a bike, reserve, rent &amp; ride!</li>
+      </ol>
+
+      {% if app_download_url %}
+      <a class="button" href="{{ app_download_url }}">
+        Get the app
+      </a>
+      {% endif %}
+
+{% endblock %}

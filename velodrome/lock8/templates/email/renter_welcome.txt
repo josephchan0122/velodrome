@@ -1,0 +1,10 @@
+Welcome to {{ organization_name }}
+
+{{ organization_name }} is a bike sharing platform, enabled by GPS-tracked, alarm secured hardware.
+
+Have a safe ride and enjoy the cycling!
+{% if app_download_url %}
+Download the app to get started.
+
+{{ app_download_url }}
+{% endif %}
